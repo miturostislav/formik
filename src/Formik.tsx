@@ -432,12 +432,19 @@ export class Formik<Values = {}, ExtraProps = {}> extends React.Component<
       } else if (this.didMount) {
         // ^^^ Make sure Formik is still mounted before calling setState
         this.setState({ isSubmitting: false });
+        this.executeFailedSubmit();
       }
     });
   };
 
   executeSubmit = () => {
     this.props.onSubmit(this.state.values, this.getFormikActions());
+  };
+
+  executeFailedSubmit = () => {
+    if (isFunction(this.props.onFailSubmit)) {
+      this.props.onFailSubmit(this.state.errors, this.getFormikActions());
+    }
   };
 
   handleBlur = (eventOrString: any): void | ((e: any) => void) => {
