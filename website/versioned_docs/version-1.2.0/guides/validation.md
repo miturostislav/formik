@@ -64,7 +64,7 @@ For more information about `<Formik validate>`, see the API reference.
 As you can see above, validation is left up to you. Feel free to write your own
 validators or use a 3rd party library. At The Palmer Group, we use
 [Yup](https://github.com/jquense/yup) for object schema validation. It has an
-API that's pretty similar [Joi](https://github.com/hapijs/joi) and
+API that's pretty similar to [Joi](https://github.com/hapijs/joi) and
 [React PropTypes](https://github.com/facebook/prop-types) but is small enough
 for the browser and fast enough for runtime usage. Because we :heart: Yup sooo
 much, Formik has a special config option / prop for Yup object schemas called `validationSchema` which will automatically transform Yup's validation errors into a pretty object whose keys match `values` and `touched`. This symmetry makes it easy to manage business logic around error messages.
@@ -136,7 +136,7 @@ For more information about `<Formik validationSchema>`, see the API reference.
 
 #### `validate`
 
-Formik supports field-level validation via the `<Field>`/`<FastField>` components' `validate` prop. This function can be synchronous or asynchronous (return a Promise). It will run after any `onChange` and `onBlur` by default. This behvaior can be altered at the top level `<Formik/>` component using the `validateOnChange` and `validateOnBlur` props respectively. In addition to change/blur, all field-level validations are run at the beginning of a submission attempt and then the results are deeply merged with any top-level validation results.
+Formik supports field-level validation via the `<Field>`/`<FastField>` components' `validate` prop. This function can be synchronous or asynchronous (return a Promise). It will run after any `onChange` and `onBlur` by default. This behavior can be altered at the top level `<Formik/>` component using the `validateOnChange` and `validateOnBlur` props respectively. In addition to change/blur, all field-level validations are run at the beginning of a submission attempt and then the results are deeply merged with any top-level validation results.
 
 ```jsx
 import React from 'react';

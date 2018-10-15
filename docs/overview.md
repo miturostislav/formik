@@ -39,6 +39,12 @@ By now, you might be thinking, "Why didn't you just use
 minimal API that does the really really annoying stuff, and leaves the rest up
 to you.**
 
+---
+
+My talk at React Alicante goes much deeper into Formik's motivation and philosophy, introduces the library (by watching me build a mini version of it), and demos how to build a non-trivial form (with arrays, custom inputs, etc.) using the real thing.
+
+<iframe width="600" height="315" src="https://www.youtube.com/embed/oiNtnehlaTo" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="Taming Forms in React - Jared Palmer"></iframe>
+
 ## Influences
 
 Formik started by expanding on
@@ -164,12 +170,12 @@ export default Basic;
 
 ### Reducing boilerplate
 
-The code above is very explicit about exactly what Formik is doing.`onChange` -> `handleChange`, `onBlur` -> `handleBlur`, and so on. However, to save you time, Formik comes with a few extra components to make life easier and less verbose: `<Form />`, `<Field />`, and `<ErrorMessage />`. They use React context to hook into the parent `<Formik />` state/methods.
+The code above is very explicit about exactly what Formik is doing. `onChange` -> `handleChange`, `onBlur` -> `handleBlur`, and so on. However, to save you time, Formik comes with a few extra components to make life easier and less verbose: `<Form />`, `<Field />`, and `<ErrorMessage />`. They use React context to hook into the parent `<Formik />` state/methods.
 
 ```jsx
 // Render Prop
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 const Basic = () => (
   <div>
@@ -197,7 +203,7 @@ const Basic = () => (
       {({ isSubmitting }) => (
         <Form>
           <Field type="email" name="email" />
-          <ErrorMessage name="email" component="div"/>
+          <ErrorMessage name="email" component="div" />
           <Field type="password" name="password" />
           <ErrorMessage name="password" component="div" />
           <button type="submit" disabled={isSubmitting}>

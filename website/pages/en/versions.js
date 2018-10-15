@@ -71,7 +71,7 @@ function Versions() {
               {versions.map(
                 version =>
                   version !== latestVersion && (
-                    <tr>
+                    <tr key={version}>
                       <th>{version}</th>
                       <td>
                         <a
@@ -99,5 +99,8 @@ function Versions() {
     </div>
   );
 }
+
+Versions.title = 'Formik Versions';
+Versions.description = 'Formik Versions and Releases';
 
 module.exports = Versions;

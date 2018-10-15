@@ -105,8 +105,8 @@ Either JSX elements or callback function. Same as `render`.
 {({ field, form }) => (
   <div>
     <input type="text" {...field} placeholder="First Name"/>
-    {touched[field.name] &&
-      errors[field.name] && <div className="error">{errors[field.name]}</div>}
+    {form.touched[field.name] &&
+      form.errors[field.name] && <div className="error">{form.errors[field.name]}</div>}
   </div>
 )}
 </Field>
@@ -216,7 +216,7 @@ You can run independent field-level validations by passing a function to the
   This works like Formik's `validate`, but instead of returning an `errors`
   object, it's just a `string`.
 
-```js
+```jsx
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 

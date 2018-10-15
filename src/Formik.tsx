@@ -11,6 +11,7 @@ import {
   FormikTouched,
   FormikValues,
   FormikContext,
+  FormikProps,
 } from './types';
 import {
   isEmptyChildren,
@@ -24,9 +25,9 @@ import {
   getIn,
 } from './utils';
 
-export class Formik<Values = {}, ExtraProps = {}> extends React.Component<
+export class Formik<Values = object, ExtraProps = {}> extends React.Component<
   FormikConfig<Values> & ExtraProps,
-  FormikState<any>
+  FormikState<Values>
 > {
   static defaultProps = {
     validateOnChange: true,
@@ -122,7 +123,7 @@ export class Formik<Values = {}, ExtraProps = {}> extends React.Component<
     });
   };
 
-  setValues = (values: FormikValues) => {
+  setValues = (values: FormikState<Values>['values']) => {
     this.setState({ values }, () => {
       if (this.props.validateOnChange) {
         this.runValidations(values);
@@ -324,14 +325,17 @@ export class Formik<Values = {}, ExtraProps = {}> extends React.Component<
 
       if (field) {
         // Set form fields by name
-        this.setState(prevState => ({
-          ...prevState,
-          values: setIn(prevState.values, field!, val),
-        }));
-
-        if (this.props.validateOnChange) {
-          this.runValidations(setIn(this.state.values, field, val));
-        }
+        this.setState(
+          prevState => ({
+            ...prevState,
+            values: setIn(prevState.values, field!, val),
+          }),
+          () => {
+            if (this.props.validateOnChange) {
+              this.runValidations(setIn(this.state.values, field!, val));
+            }
+          }
+        );
       }
     };
 
@@ -594,6 +598,7 @@ export class Formik<Values = {}, ExtraProps = {}> extends React.Component<
       ...this.getFormikBag(),
       validationSchema: this.props.validationSchema,
       validate: this.props.validate,
+      initialValues: this.initialValues,
     };
   };
 
@@ -606,10 +611,12 @@ export class Formik<Values = {}, ExtraProps = {}> extends React.Component<
         {component
           ? React.createElement(component as any, props)
           : render
-            ? (render as any)(props)
+            ? render(props)
             : children // children come last, always called
-              ? typeof children === 'function'
-                ? (children as any)(props)
+              ? isFunction(children)
+                ? (children as ((
+                    props: FormikProps<Values>
+                  ) => React.ReactNode))(props as FormikProps<Values>)
                 : !isEmptyChildren(children)
                   ? React.Children.only(children)
                   : null
@@ -644,7 +651,7 @@ function warnAboutMissingIdentifier({
 export function yupToFormErrors<Values>(yupError: any): FormikErrors<Values> {
   let errors: any = {} as FormikErrors<Values>;
   if (yupError.inner.length === 0) {
-    return setIn(errors, yupError.path, yupError.message)
+    return setIn(errors, yupError.path, yupError.message);
   }
   for (let err of yupError.inner) {
     if (!errors[err.path]) {

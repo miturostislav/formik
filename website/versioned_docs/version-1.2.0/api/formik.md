@@ -108,7 +108,7 @@ Submitting state of the form. Returns `true` if submission is in progress and `f
 #### `isValid: boolean`
 
 Returns `true` if the there are no `errors`, or the result of
-`isInitialValid` the form if is in "pristine" condition (i.e. not `dirty`)).
+`isInitialValid` the form if is in "pristine" condition (i.e. not `dirty`).
 
 #### `isValidating: boolean`
 
@@ -130,10 +130,10 @@ Set `errors` imperatively.
 Set the error message of a field imperatively. `field` should match the key of
 `errors` you wish to update. Useful for creating custom input error handlers.
 
-#### `setFieldTouched: (field: string, isTouched: boolean, shouldValidate?: boolean) => void`
+#### `setFieldTouched: (field: string, isTouched?: boolean, shouldValidate?: boolean) => void`
 
 Set the touched state of a field imperatively. `field` should match the key of
-`touched` you wish to update. Useful for creating custom input blur handlers. Calling this method will trigger validation to run if `validateOnBlur` is set to `true` (which it is by default). You can also explicitly prevent/skip validation by passing a third argument as `false`.
+`touched` you wish to update. Useful for creating custom input blur handlers. Calling this method will trigger validation to run if `validateOnBlur` is set to `true` (which it is by default). `isTouched` defaults to `true` if not specified. You can also explicitly prevent/skip validation by passing a third argument as `false`.
 
 #### `submitForm: () => void`
 
@@ -173,7 +173,7 @@ A top-level status object that you can use to represent form state that can't
 otherwise be expressed/stored with other methods. This is useful for capturing
 and passing through API responses to your inner component.
 
-`status` should only be modifed by calling
+`status` should only be modified by calling
 [`setStatus`](#setstatus-status-any-void).
 
 #### `touched: { [field: string]: boolean }`

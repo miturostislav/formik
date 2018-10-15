@@ -1,6 +1,7 @@
 ---
 id: fieldarray
 title: <FieldArray />
+custom_edit_url: https://github.com/jaredpalmer/formik/edit/master/docs/api/fieldarray.md
 ---
 
 `<FieldArray />` is a component that helps with common array/list manipulations. You pass it a `name` property with the path to the key within `values` that holds the relevant array. `<FieldArray />` will then give you access to array helper methods via render props. For convenience, calling these methods will trigger validation and also manage `touched` for you.
@@ -135,7 +136,7 @@ So...to display `'Must have friends'` and `'Minimum of 3 friends'` (our example'
 
 **_Bad_**
 
-```js
+```jsx
 // within a `FieldArray`'s render
 const FriendArrayErrors = errors =>
   errors.friends ? <div>{errors.friends}</div> : null; // app will crash
@@ -143,7 +144,7 @@ const FriendArrayErrors = errors =>
 
 **_Good_**
 
-```js
+```jsx
 // within a `FieldArray`'s render
 const FriendArrayErrors = errors =>
   typeof errors.friends === 'string' ? <div>{errors.friends}</div> : null;
@@ -190,6 +191,7 @@ There are three ways to render things with `<FieldArray />`
 
 * `<FieldArray name="..." component>`
 * `<FieldArray name="..." render>`
+* `<FieldArray name="..." children>`
 
 ### `render: (arrayHelpers: ArrayHelpers) => React.ReactNode`
 
@@ -249,5 +251,33 @@ export const MyDynamicForm = ({
  <Form>
   {/**  whatever you need to do */}
  </Form>
+);
+```
+
+### `children: func`
+
+```jsx
+import React from 'react';
+import { Formik, Form, Field, FieldArray } from 'formik'
+
+
+export const FriendList = () => (
+  <div>
+    <h1>Friend List</h1>
+    <Formik
+      initialValues={{ friends: ['jared', 'ian', 'brent'] }}
+      onSubmit={...}
+      render={formikProps => (
+        <FieldArray name="friends">
+          {({ move, swap, push, insert, unshift, pop, form }) => {
+            return (
+              <Form>
+                {/*... use these however you want */}
+              </Form>
+            );
+          }}
+        <FieldArray/>
+    />
+  </div>
 );
 ```
