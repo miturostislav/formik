@@ -20,7 +20,12 @@ class Index extends React.Component {
     const editUrl = `${siteConfig.repoUrl}/edit/master/website/siteConfig.js`;
     const showcase = siteConfig.users.filter(u => !!u.pinned).map(user => (
       <a href={user.infoLink} key={user.infoLink}>
-        <img src={user.image} alt={user.caption} title={user.caption} />
+        <img
+          src={user.image}
+          alt={user.caption}
+          title={user.caption}
+          style={user.style}
+        />
       </a>
     ));
     return (
@@ -97,9 +102,10 @@ class Index extends React.Component {
                 },
                 {
                   title: 'Adoptable',
-                  content: `Since form state is inherently local and ephemeral, Formik does not use external state mangement librares
-                  like Redux or MobX. This also makes Formik is easy
-                  to adopt incrementally and keeps bundle size to a minimum.`,
+                  content: `Since form state is inherently local and ephemeral, Formik 
+                  does not use external state management libraries like Redux or MobX.
+                  This also makes Formik easy to adopt incrementally and keeps bundle
+                  size to a minimum.`,
                 },
               ]}
               layout="threeColumn"
